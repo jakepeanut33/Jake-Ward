@@ -1,0 +1,15 @@
+{
+  "clips": [
+    {
+      "id": "example-1",
+      "source_url": "https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID",
+      "start": "00:00:12",
+      "end": "00:00:58",
+      "title": "When the Core Boys lose it 😂",
+      "caption": "The Core Boys can't stop laughing",
+      "posted": false,
+      "posted_at": null,
+      "video_id": null
+    }
+  ]
+}

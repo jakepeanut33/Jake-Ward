@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Secrets / credentials — NEVER commit these
+client_secret*.json
+token.json
+*.env
+.env
+
+# Working files
+work/
+downloads/
+output/
+*.mp4
+*.mkv
+*.webm
+*.part
+
+# OS
+.DS_Store

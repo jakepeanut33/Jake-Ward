@@ -1,0 +1,47 @@
+# ---------------------------------------------------------------------------
+# Channel + content configuration (non-secret). Safe to commit.
+# Secrets (OAuth client id/secret, refresh token) come from env vars instead.
+# ---------------------------------------------------------------------------
+
+channel:
+  # Used to build the uploaded video's title/description/tags.
+  name: "Core Boys Funny Clips"
+  # Appended to every description. Keep #Shorts so YouTube classifies it correctly.
+  hashtags:
+    - "#Shorts"
+    - "#funny"
+    - "#coreboys"
+    - "#comedy"
+  # Default privacy for uploads: "public", "unlisted", or "private".
+  privacy_status: "public"
+  # YouTube category id. 23 = Comedy, 24 = Entertainment.
+  category_id: "23"
+  # Mark uploads as not-made-for-kids by default (required field for the API).
+  made_for_kids: false
+
+formatting:
+  # Target Shorts resolution (vertical 9:16).
+  width: 1080
+  height: 1920
+  # Hard cap on clip length. Shorts must be <= 60s; we keep margin.
+  max_seconds: 58
+  # Background style for non-vertical source footage:
+  #   "blur"  -> blurred zoomed copy behind the centered clip (recommended)
+  #   "crop"  -> center-crop the source to 9:16 (zooms in, may cut edges)
+  #   "pad"   -> black bars top/bottom
+  background: "blur"
+  # Burn a caption onto the top of the video (uses the clip's "caption" field).
+  burn_caption: true
+
+# Optional auto-sourcing: pull the latest uploads from these channels and add
+# them as candidate clips to the queue. Leave empty to rely only on the manual
+# queue in data/queue.json. Each entry is a channel URL or @handle.
+auto_source:
+  enabled: false
+  channels:
+    # - "https://www.youtube.com/@SomeCoreBoysChannel"
+  # How many of the most recent uploads to consider per run.
+  videos_per_channel: 5
+  # When auto-clipping, take this many seconds starting at this offset.
+  clip_offset_seconds: 0
+  clip_length_seconds: 50
