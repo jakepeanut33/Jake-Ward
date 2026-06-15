@@ -73,3 +73,7 @@ class Settings:
     @property
     def auto_source(self) -> dict[str, Any]:
         return self.raw.get("auto_source", {})
+
+    @property
+    def discovery(self) -> dict[str, Any]:
+        return self.raw.get("discovery", {})

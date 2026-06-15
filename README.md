@@ -88,12 +88,35 @@ can also trigger a post immediately from the repo's **Actions** tab →
 Edit the three `cron:` lines in `.github/workflows/post-shorts.yml`. Cron is in
 **UTC**. The defaults are roughly 9am / 3pm / 8pm US Central.
 
-## Optional: auto-source from channels
-Instead of hand-picking every clip, you can have the pipeline pull the latest
-uploads from channels you list. In `config/settings.yaml` set
-`auto_source.enabled: true` and add channel URLs/handles. When the manual queue
-runs empty, it grabs a fixed window from each recent upload. Hand-curated
-timestamps still make far better Shorts, so this is a fallback, not a substitute.
+## Auto-discovery: clip the top-performing videos automatically
+Instead of hand-feeding URLs, the pipeline can find top videos itself and queue
+clips of them. When the queue runs empty, it refills from whatever sources you
+enable in `config/settings.yaml`:
+
+**`discovery`** — finds the most-viewed videos and clips them:
+- `mode: search` — most-viewed videos for your `keywords` (best for a niche like
+  "core boys funny").
+- `mode: trending` — the regional "most popular" chart.
+- Filters by `min_views`, `max_source_duration_seconds`, and (search mode)
+  `published_within_days`, then auto-clips a `clip_length_seconds` window
+  starting `clip_offset_seconds` in (to skip intros).
+
+Discovery needs a **YouTube Data API key** (public-data read; separate from the
+upload OAuth token). Create one in the same Google Cloud project under
+**APIs & Services → Credentials → API key**, and add it as the `YT_API_KEY`
+GitHub secret.
+
+**`auto_source`** — instead/also pulls the latest uploads from specific channels
+you list.
+
+> ⚠️ **Auto-clipping the current top videos is the riskiest mode.** Those are
+> exactly the videos most likely to be Content-ID matched and claimed, and a
+> channel that only reposts other people's hits is the classic strike-and-ban
+> pattern. Use it with creators who allow reuse, or add genuine transformation.
+>
+> Also note: the tool can find *which* video is popular, but not *which 50
+> seconds* are the good part — it takes a fixed window. Hand-picked timestamps
+> in `data/queue.json` still make much better Shorts.
 
 ## Project layout
 ```

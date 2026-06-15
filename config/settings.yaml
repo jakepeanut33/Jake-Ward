@@ -33,6 +33,37 @@ formatting:
   # Burn a caption onto the top of the video (uses the clip's "caption" field).
   burn_caption: true
 
+# ---------------------------------------------------------------------------
+# Discovery: automatically find top-performing videos and queue clips of them.
+# Requires a YouTube Data API key in the YT_API_KEY env var / GitHub secret.
+# When enabled and the queue is empty, the pipeline fills it from these results.
+# ---------------------------------------------------------------------------
+# HEADS UP: auto-clipping other people's top videos is the most copyright-risky
+# way to run this. Use creators who allow reuse, or add real transformation, or
+# you risk Content-ID claims and channel termination.
+discovery:
+  enabled: false
+  # "search"   -> find the most-viewed videos for your keywords (best for a niche)
+  # "trending" -> the regional "most popular" chart (broad, generic)
+  mode: "search"
+  keywords:
+    - "core boys funny"
+    - "funny moments"
+  region: "US"
+  # Used only in "trending" mode. 23 = Comedy, 24 = Entertainment.
+  category_id: "23"
+  # How many results to pull per keyword / from the chart (max 50).
+  max_results: 15
+  # Skip videos below this view count (quality/relevance floor).
+  min_views: 200000
+  # "search" mode only: only consider videos published within N days (0 = any).
+  published_within_days: 0
+  # Skip very long sources so downloads stay cheap (0 = no limit).
+  max_source_duration_seconds: 1800
+  # Auto-clip window: start this many seconds in (skips intros), this long.
+  clip_offset_seconds: 30
+  clip_length_seconds: 50
+
 # Optional auto-sourcing: pull the latest uploads from these channels and add
 # them as candidate clips to the queue. Leave empty to rely only on the manual
 # queue in data/queue.json. Each entry is a channel URL or @handle.

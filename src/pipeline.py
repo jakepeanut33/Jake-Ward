@@ -7,21 +7,31 @@ import sys
 from .auto_source import build_candidates
 from .clipper import ffmpeg_available, make_short
 from .config import WORK_DIR, OAuthSecrets, Settings
+from .discovery import discover
 from .downloader import download_segment
 from . import queue_manager as qm
 from .uploader import upload_short
 
 
 def refill_queue(settings: Settings, data: dict) -> int:
-    """Add auto-sourced candidates to the queue. Returns number added."""
-    candidates = build_candidates(settings.auto_source, settings.channel)
+    """Top the queue up from every enabled source. Returns number added."""
+    candidates: list[dict] = []
+    # Top-performing videos found via the YouTube Data API.
+    candidates += discover(settings.discovery, settings.channel)
+    # Latest uploads from explicitly listed channels.
+    candidates += build_candidates(settings.auto_source, settings.channel)
+
     added = 0
     for cand in candidates:
+        # add_clip skips ids already in the queue (posted or pending), so the
+        # same source video is never queued or reposted twice.
         if qm.add_clip(data, cand):
             added += 1
     if added:
         qm.save_queue(data)
-        print(f"[pipeline] added {added} auto-sourced clip(s) to the queue")
+        print(f"[pipeline] added {added} new clip(s) to the queue")
+    else:
+        print("[pipeline] no new clips found to add")
     return added
 
 
@@ -29,8 +39,9 @@ def run_once(dry_run: bool = False) -> int:
     settings = Settings.load()
     data = qm.load_queue()
 
-    # Top up from source channels if enabled and the queue is running low.
-    if settings.auto_source.get("enabled") and qm.pending_count(data) == 0:
+    # Refill from auto-sources when the queue runs dry.
+    sources_on = settings.discovery.get("enabled") or settings.auto_source.get("enabled")
+    if sources_on and qm.pending_count(data) == 0:
         refill_queue(settings, data)
 
     clip = qm.next_clip(data)
