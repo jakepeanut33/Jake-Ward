@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auction Arbitrage — Opportunities</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 1.5rem; }
+    h1 { font-size: 1.3rem; margin: 0 0 .25rem; }
+    .meta { color: #888; font-size: .85rem; margin-bottom: 1rem; }
+    .controls { margin-bottom: .75rem; }
+    input[type=search] { padding: .4rem .6rem; width: 280px; max-width: 60vw; }
+    table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+    th, td { padding: .45rem .6rem; text-align: right; border-bottom: 1px solid #8884; white-space: nowrap; }
+    th:first-child, td:first-child, td.title { text-align: left; white-space: normal; }
+    th { cursor: pointer; user-select: none; position: sticky; top: 0; background: Canvas; }
+    th.sorted-asc::after { content: " \25B2"; }
+    th.sorted-desc::after { content: " \25BC"; }
+    tbody tr:hover { background: #8881; }
+    .low { color: #c47; font-weight: 600; }
+    .pos { color: #2a8; font-weight: 600; }
+    .flags { color: #c80; font-size: .8rem; }
+    a { color: inherit; }
+    .empty { color: #888; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <h1>Auction Arbitrage — Live Opportunities</h1>
+  <div class="meta">
+    Showing the latest poll. Margin threshold: {{ threshold }}%.
+    {{ rows|length }} opportunit{{ "y" if rows|length == 1 else "ies" }}.
+  </div>
+
+  {% if rows %}
+  <div class="controls">
+    <input type="search" id="filter" placeholder="Filter by title, source, grade…">
+  </div>
+  <table id="opps">
+    <thead>
+      <tr>
+        <th data-key="title" data-type="text">Item</th>
+        <th data-key="source" data-type="text">Source</th>
+        <th data-key="grade" data-type="text">Grade</th>
+        <th data-key="est_value" data-type="num">Est. Value</th>
+        <th data-key="all_in_cost" data-type="num">All-in Cost</th>
+        <th data-key="net_proceeds" data-type="num">Net Resale</th>
+        <th data-key="profit" data-type="num">Profit</th>
+        <th data-key="margin_pct" data-type="num">Margin %</th>
+        <th data-key="score" data-type="num" class="sorted-desc">Score</th>
+        <th data-key="confidence" data-type="num">Conf.</th>
+        <th data-key="seconds_left" data-type="num">Time Left</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td class="title"><a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.title }}</a>
+          {% if r.reasons %}<div class="flags">{{ r.reasons|join(", ") }}</div>{% endif %}
+        </td>
+        <td>{{ r.source }}</td>
+        <td>{{ r.grade }}</td>
+        <td data-v="{{ r.est_value }}">${{ "%.2f"|format(r.est_value or 0) }}</td>
+        <td data-v="{{ r.all_in_cost }}">${{ "%.2f"|format(r.all_in_cost or 0) }}</td>
+        <td data-v="{{ r.net_proceeds }}">${{ "%.2f"|format(r.net_proceeds or 0) }}</td>
+        <td data-v="{{ r.profit }}" class="pos">${{ "%.2f"|format(r.profit or 0) }}</td>
+        <td data-v="{{ r.margin_pct }}">{{ "%.1f"|format(r.margin_pct or 0) }}%</td>
+        <td data-v="{{ r.score }}">{{ "%.1f"|format(r.score or 0) }}</td>
+        <td data-v="{{ r.confidence }}" class="{{ 'low' if r.low_confidence else '' }}">
+          {{ "%.0f"|format((r.confidence or 0) * 100) }}%</td>
+        <td data-v="{{ r.seconds_left if r.seconds_left is not none else -1 }}">
+          {% if r.seconds_left is not none %}
+            {{ (r.seconds_left // 3600)|int }}h {{ ((r.seconds_left % 3600) // 60)|int }}m
+          {% else %}—{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="empty">No opportunities yet. Run a poll: <code>python -m arb.cli run-once</code></p>
+  {% endif %}
+
+  <script>
+    // Lightweight client-side sort + filter, no dependencies.
+    const table = document.getElementById('opps');
+    if (table) {
+      const tbody = table.tBodies[0];
+      table.querySelectorAll('th').forEach((th, idx) => {
+        th.addEventListener('click', () => {
+          const type = th.dataset.type;
+          const asc = !th.classList.contains('sorted-asc');
+          table.querySelectorAll('th').forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
+          th.classList.add(asc ? 'sorted-asc' : 'sorted-desc');
+          const rows = [...tbody.rows];
+          rows.sort((a, b) => {
+            let av = a.cells[idx].dataset.v ?? a.cells[idx].textContent.trim();
+            let bv = b.cells[idx].dataset.v ?? b.cells[idx].textContent.trim();
+            if (type === 'num') { av = parseFloat(av) || 0; bv = parseFloat(bv) || 0; return asc ? av - bv : bv - av; }
+            return asc ? String(av).localeCompare(bv) : String(bv).localeCompare(av);
+          });
+          rows.forEach(r => tbody.appendChild(r));
+        });
+      });
+      document.getElementById('filter').addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase();
+        [...tbody.rows].forEach(r => {
+          r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+      });
+    }
+  </script>
+</body>
+</html>

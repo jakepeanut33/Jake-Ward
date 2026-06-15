@@ -1,0 +1,81 @@
+# Auction Arbitrage MVP — single source of truth.
+# Copy to config.yaml and edit. Secrets can also come from env vars.
+
+db_path: "auction_arb.db"
+poll_interval_seconds: 600        # how often `run` re-polls sources
+margin_threshold_pct: 25.0        # only surface opportunities with >= this return on cost
+min_profit: 20.0                  # ...and at least this many dollars of expected profit
+log_level: "INFO"
+
+# --- categories (start narrow: graded sports cards) ---
+categories:
+  psa_bgs_sports_cards:
+    label: "Graded Sports Cards (PSA/BGS)"
+    sold_comp_window: 10          # value = median of last N sold comps
+    min_comps: 5                  # >= this => full confidence; below => flagged low-confidence
+
+# --- sources (each isolated behind a common interface; add more freely) ---
+sources:
+  - name: "sample"
+    type: "sample"
+    enabled: true                 # offline demo source so the pipeline runs out of the box
+    category: "psa_bgs_sports_cards"
+    fixture_path: "fixtures/sample_listings.json"
+
+  - name: "ebay_us"
+    type: "ebay"                  # official eBay Browse API (active auctions)
+    enabled: false                # flip to true once you add credentials below
+    category: "psa_bgs_sports_cards"
+    marketplace_id: "EBAY_US"
+    query: "PSA 10 rookie card"
+    ebay_category_ids: "212"      # Sports Trading Cards
+    limit: 50
+    sandbox: false
+    app_id: ""                    # or set EBAY_APP_ID env var
+    cert_id: ""                   # or set EBAY_CERT_ID env var
+
+# --- sold-comp source (pluggable; CSV for the MVP) ---
+comps:
+  type: "csv"
+  path: "fixtures/sample_comps.csv"
+
+# --- fees (every value is configurable; these are sane defaults) ---
+fees:
+  buyer_premium_pct: 0.0          # eBay: usually 0; auction houses often 10-20%
+  sales_tax_pct: 8.0
+  default_inbound_shipping: 5.0   # used when a listing has no shipping cost
+  marketplace_fee_pct: 13.25      # resale selling fee
+  payment_fee_pct: 2.9
+  payment_fee_fixed: 0.30
+  outbound_shipping: 5.0
+
+# --- how we project the final winning bid from the current bid ---
+bid_projection:
+  multiplier: 1.0                 # projected = current_bid * multiplier ...
+  min_increment: 1.0             # ... but at least current_bid + this
+
+# --- scoring weights & penalties ---
+scoring:
+  profit_weight: 1.0
+  margin_weight: 100.0            # scales margin fraction into ~dollar units
+  low_confidence_penalty: 0.5     # score multiplier when comp sample is thin
+  ending_soon_minutes: 30         # auctions ending within this window are penalized
+  ending_soon_penalty: 0.5
+
+# --- alerts ---
+alerts:
+  email:
+    enabled: false
+    top_n: 5
+    smtp_host: "smtp.gmail.com"
+    smtp_port: 587
+    use_tls: true
+    username: ""
+    password: ""                  # use an app password, or set EMAIL_PASSWORD env var
+    from_addr: ""
+    to_addrs: []
+
+# --- dashboard ---
+dashboard:
+  host: "127.0.0.1"
+  port: 8000
