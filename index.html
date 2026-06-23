@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Western Forms Inc — Kansas City's manufacturer of lightweight aluminum concrete forming systems for residential and commercial construction since 1956." />
+  <title>Western Forms Inc — Aluminum Concrete Forming Systems | Kansas City</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Page load curtain -->
+  <div class="curtain" id="curtain">
+    <span class="curtain__mark">WF</span>
+  </div>
+
+  <!-- Navigation -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#top" class="nav__logo" aria-label="Western Forms home">
+        <span class="nav__logo-mark">WF</span>
+        <span class="nav__logo-text">Western&nbsp;Forms<small>Inc · Kansas City</small></span>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#work">Work</a>
+        <a href="#systems">Systems</a>
+        <a href="#about">About</a>
+        <a href="#advantage">Advantage</a>
+        <a href="#contact" class="nav__cta">Get a Quote</a>
+      </nav>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__bg" data-parallax="0.25"></div>
+      <div class="hero__grid"></div>
+      <div class="hero__content">
+        <p class="hero__eyebrow reveal">Engineered in Kansas City · Building worldwide since 1956</p>
+        <h1 class="hero__title">
+          <span class="line"><span>Forming the</span></span>
+          <span class="line"><span>structures that</span></span>
+          <span class="line accent"><span>hold the world up.</span></span>
+        </h1>
+        <p class="hero__sub reveal">Lightweight aluminum concrete forming systems that pour faster, last longer, and build entire homes in a single day.</p>
+        <div class="hero__actions reveal">
+          <a href="#work" class="btn btn--solid">See the Work <span class="btn__arrow">→</span></a>
+          <a href="#systems" class="btn btn--ghost">Explore Systems</a>
+        </div>
+      </div>
+      <div class="hero__stats">
+        <div class="stat reveal"><span class="stat__num" data-count="65">0</span><span class="stat__plus">+</span><span class="stat__label">Years forming concrete</span></div>
+        <div class="stat reveal"><span class="stat__num" data-count="40">0</span><span class="stat__plus">+</span><span class="stat__label">Countries served</span></div>
+        <div class="stat reveal"><span class="stat__num" data-count="100">0</span><span class="stat__plus">k+</span><span class="stat__label">Homes formed</span></div>
+      </div>
+      <a href="#work" class="hero__scroll" aria-label="Scroll to work">
+        <span></span> Scroll
+      </a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Residential</span><i>✦</i><span>Mid-Rise</span><i>✦</i><span>Commercial</span><i>✦</i><span>Infrastructure</span><i>✦</i><span>Foundations</span><i>✦</i><span>Disaster-Resilient</span><i>✦</i>
+        <span>Residential</span><i>✦</i><span>Mid-Rise</span><i>✦</i><span>Commercial</span><i>✦</i><span>Infrastructure</span><i>✦</i><span>Foundations</span><i>✦</i><span>Disaster-Resilient</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- WORK / PORTFOLIO with cool transitions -->
+    <section class="work" id="work">
+      <div class="work__head">
+        <p class="section-eyebrow reveal">Selected Work</p>
+        <h2 class="section-title reveal">Concrete poured with Western&nbsp;Forms.</h2>
+        <p class="section-lead reveal">Hover a project to bring it forward. Each was built with our reusable aluminum forming systems — from single-family homes to multi-story structures.</p>
+      </div>
+
+      <div class="work__grid" id="workGrid">
+        <article class="card" data-cat="Residential" style="--img:url('assets/proj-1.svg')">
+          <div class="card__media"></div>
+          <div class="card__overlay">
+            <span class="card__index">01</span>
+            <div class="card__meta">
+              <span class="card__cat">Residential</span>
+              <h3 class="card__title">Single-Pour Homes</h3>
+              <p class="card__desc">Monolithic walls and floors cast in one continuous pour — a finished home in a day.</p>
+            </div>
+            <span class="card__view">View project →</span>
+          </div>
+        </article>
+
+        <article class="card card--tall" data-cat="Commercial" style="--img:url('assets/proj-2.svg')">
+          <div class="card__media"></div>
+          <div class="card__overlay">
+            <span class="card__index">02</span>
+            <div class="card__meta">
+              <span class="card__cat">Commercial</span>
+              <h3 class="card__title">Mid-Rise Frames</h3>
+              <p class="card__desc">Repeatable form sets stripped and re-flown floor after floor with tight tolerances.</p>
+            </div>
+            <span class="card__view">View project →</span>
+          </div>
+        </article>
+
+        <article class="card" data-cat="Infrastructure" style="--img:url('assets/proj-3.svg')">
+          <div class="card__media"></div>
+          <div class="card__overlay">
+            <span class="card__index">03</span>
+            <div class="card__meta">
+              <span class="card__cat">Infrastructure</span>
+              <h3 class="card__title">Retaining & Channels</h3>
+              <p class="card__desc">Heavy civil forms that hold line and grade under serious hydrostatic load.</p>
+            </div>
+            <span class="card__view">View project →</span>
+          </div>
+        </article>
+
+        <article class="card" data-cat="Resilient" style="--img:url('assets/proj-4.svg')">
+          <div class="card__media"></div>
+          <div class="card__overlay">
+            <span class="card__index">04</span>
+            <div class="card__meta">
+              <span class="card__cat">Disaster-Resilient</span>
+              <h3 class="card__title">Storm-Rated Builds</h3>
+              <p class="card__desc">Solid concrete envelopes engineered for hurricane and seismic zones.</p>
+            </div>
+            <span class="card__view">View project →</span>
+          </div>
+        </article>
+
+        <article class="card card--wide" data-cat="Housing" style="--img:url('assets/proj-5.svg')">
+          <div class="card__media"></div>
+          <div class="card__overlay">
+            <span class="card__index">05</span>
+            <div class="card__meta">
+              <span class="card__cat">Mass Housing</span>
+              <h3 class="card__title">Affordable Housing at Scale</h3>
+              <p class="card__desc">Tunnel and panel systems delivering thousands of identical, durable units fast.</p>
+            </div>
+            <span class="card__view">View project →</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SYSTEMS -->
+    <section class="systems" id="systems">
+      <div class="systems__head">
+        <p class="section-eyebrow reveal">Our Systems</p>
+        <h2 class="section-title reveal">One toolbox. Every pour.</h2>
+      </div>
+      <div class="systems__list">
+        <div class="sysrow reveal">
+          <span class="sysrow__no">01</span>
+          <h3 class="sysrow__name">Hand-Set Aluminum Forms</h3>
+          <p class="sysrow__text">Panels light enough for one worker to carry — no crane, no problem.</p>
+          <span class="sysrow__tag">Walls · Floors · Stairs</span>
+        </div>
+        <div class="sysrow reveal">
+          <span class="sysrow__no">02</span>
+          <h3 class="sysrow__name">Monolithic Pour Kits</h3>
+          <p class="sysrow__text">Walls and slab cast together for a seamless, joint-free structure.</p>
+          <span class="sysrow__tag">Residential</span>
+        </div>
+        <div class="sysrow reveal">
+          <span class="sysrow__no">03</span>
+          <h3 class="sysrow__name">Modular Commercial Sets</h3>
+          <p class="sysrow__text">Configurable to any floor plate and re-flown for hundreds of cycles.</p>
+          <span class="sysrow__tag">Mid-Rise</span>
+        </div>
+        <div class="sysrow reveal">
+          <span class="sysrow__no">04</span>
+          <h3 class="sysrow__name">Custom Engineering</h3>
+          <p class="sysrow__text">Our KC engineering team designs form layouts from your drawings.</p>
+          <span class="sysrow__tag">Full Service</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT / ADVANTAGE split -->
+    <section class="about" id="about">
+      <div class="about__media reveal-img">
+        <div class="about__img" data-parallax="0.12"></div>
+        <div class="about__badge">
+          <span>Est.</span><strong>1956</strong><span>Kansas City, USA</span>
+        </div>
+      </div>
+      <div class="about__body">
+        <p class="section-eyebrow reveal">About Western Forms</p>
+        <h2 class="section-title reveal">Built in the heartland.<br/>Trusted on six continents.</h2>
+        <p class="reveal">For more than six decades, Western Forms has manufactured the aluminum forming systems that builders rely on to pour concrete faster and more affordably. From our Kansas City facility, we ship complete, engineered systems anywhere a structure needs to rise.</p>
+        <p class="reveal">Every form is precision-machined, infinitely reusable, and backed by a team that has been solving forming problems since the Eisenhower administration.</p>
+        <a href="#contact" class="btn btn--solid reveal">Talk to an engineer <span class="btn__arrow">→</span></a>
+      </div>
+    </section>
+
+    <!-- ADVANTAGE -->
+    <section class="advantage" id="advantage">
+      <div class="advantage__head">
+        <p class="section-eyebrow reveal">The Western Advantage</p>
+        <h2 class="section-title reveal">Why crews keep reordering.</h2>
+      </div>
+      <div class="advantage__grid">
+        <div class="adv reveal"><span class="adv__ic">⚡</span><h3>Pour in a Day</h3><p>Set, pour, and strip a full structure in a single shift.</p></div>
+        <div class="adv reveal"><span class="adv__ic">♻️</span><h3>2,000+ Reuses</h3><p>Aluminum forms pay for themselves and keep going.</p></div>
+        <div class="adv reveal"><span class="adv__ic">🪶</span><h3>Hand-Liftable</h3><p>No cranes. Lighter panels, smaller crews, faster cycles.</p></div>
+        <div class="adv reveal"><span class="adv__ic">🌎</span><h3>Ships Worldwide</h3><p>Engineered kits delivered to job sites on six continents.</p></div>
+        <div class="adv reveal"><span class="adv__ic">🛡️</span><h3>Storm-Rated</h3><p>Solid concrete envelopes built to outlast the weather.</p></div>
+        <div class="adv reveal"><span class="adv__ic">📐</span><h3>Engineered Free</h3><p>We design your form layout from your plans, included.</p></div>
+      </div>
+    </section>
+
+    <!-- CTA / CONTACT -->
+    <section class="contact" id="contact">
+      <div class="contact__inner">
+        <p class="section-eyebrow reveal">Start a Project</p>
+        <h2 class="contact__title reveal">Let's pour something that lasts.</h2>
+        <p class="contact__lead reveal">Tell us about your build and our Kansas City team will spec a forming system for it.</p>
+        <form class="contact__form reveal" id="quoteForm" novalidate>
+          <div class="field"><input type="text" name="name" required placeholder=" " /><label>Name</label></div>
+          <div class="field"><input type="email" name="email" required placeholder=" " /><label>Email</label></div>
+          <div class="field"><input type="text" name="project" placeholder=" " /><label>Project type</label></div>
+          <div class="field field--full"><textarea name="details" rows="3" placeholder=" "></textarea><label>Project details</label></div>
+          <button type="submit" class="btn btn--solid">Request a Quote <span class="btn__arrow">→</span></button>
+          <p class="contact__note" id="formNote" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="nav__logo-mark">WF</span>
+        <div>
+          <strong>Western Forms Inc</strong>
+          <span>6200 Equitable Road · Kansas City, MO 64120</span>
+        </div>
+      </div>
+      <div class="footer__cols">
+        <div><h4>Explore</h4><a href="#work">Work</a><a href="#systems">Systems</a><a href="#about">About</a></div>
+        <div><h4>Contact</h4><a href="tel:+18164719171">+1 (816) 471-9171</a><a href="mailto:sales@westernforms.com">sales@westernforms.com</a></div>
+        <div><h4>Hours</h4><span>Mon–Fri · 7am–5pm CT</span></div>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© <span id="year"></span> Western Forms Inc. Forming concrete since 1956.</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

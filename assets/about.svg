@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="800" viewBox="0 0 640 800">
+  <defs>
+    <linearGradient id="ga" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b3340"/><stop offset="1" stop-color="#0f1216"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="800" fill="url(#ga)"/>
+  <g fill="none" stroke="#5b8db8" stroke-opacity="0.3" stroke-width="2">
+    <rect x="80" y="120" width="480" height="560"/>
+    <line x1="80" y1="260" x2="560" y2="260"/>
+    <line x1="80" y1="400" x2="560" y2="400"/>
+    <line x1="80" y1="540" x2="560" y2="540"/>
+    <line x1="320" y1="120" x2="320" y2="680"/>
+  </g>
+  <g fill="#f5a623" fill-opacity="0.85">
+    <rect x="120" y="160" width="70" height="60"/>
+    <rect x="360" y="300" width="70" height="60"/>
+    <rect x="120" y="440" width="70" height="60"/>
+    <rect x="360" y="580" width="70" height="60"/>
+  </g>
+  <g fill="#5b8db8" fill-opacity="0.4">
+    <rect x="360" y="160" width="70" height="60"/>
+    <rect x="120" y="300" width="70" height="60"/>
+    <rect x="360" y="440" width="70" height="60"/>
+    <rect x="120" y="580" width="70" height="60"/>
+  </g>
+  <text x="320" y="740" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-size="46" fill="#f5a623" fill-opacity="0.25">SINCE 1956</text>
+</svg>
