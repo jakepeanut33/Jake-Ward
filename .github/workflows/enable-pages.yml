@@ -1,0 +1,64 @@
+name: Enable GitHub Pages
+
+# Calls the GitHub REST API to turn on Pages and serve the site directly
+# from the main branch root. This avoids the github-pages deployment
+# environment (which is locked until Pages is enabled), so it can perform
+# the same action as the Settings -> Pages button.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  pages: write
+  contents: read
+
+jobs:
+  enable-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable / update Pages (source = main /root)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -e
+          echo "Attempting to create Pages site..."
+          create_code=$(curl -sS -o /tmp/create.json -w "%{http_code}" -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPO/pages" \
+            -d '{"source":{"branch":"main","path":"/"}}') || true
+          echo "POST /pages -> HTTP $create_code"
+          cat /tmp/create.json || true
+          echo
+
+          # 409 = already exists; ensure source is correct via PUT
+          echo "Ensuring Pages source via PUT..."
+          update_code=$(curl -sS -o /tmp/update.json -w "%{http_code}" -X PUT \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPO/pages" \
+            -d '{"source":{"branch":"main","path":"/"}}') || true
+          echo "PUT /pages -> HTTP $update_code"
+          cat /tmp/update.json || true
+          echo
+
+          echo "Current Pages config:"
+          curl -sS \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$REPO/pages" || true
+          echo
+
+          if [ "$create_code" = "201" ] || [ "$create_code" = "409" ] || [ "$update_code" = "204" ] || [ "$update_code" = "200" ]; then
+            echo "Pages enable/update request accepted."
+          else
+            echo "Pages could not be enabled via API (HTTP create=$create_code update=$update_code)."
+            echo "The workflow token may lack permission; manual enablement in Settings -> Pages is required."
+            exit 1
+          fi
